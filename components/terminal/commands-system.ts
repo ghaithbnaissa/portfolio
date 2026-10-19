@@ -8,12 +8,12 @@ const usageError = (message: string, hint: string): TerminalSegment[][] => [line
 const pingLines = (host: string): TerminalSegment[][] => {
   const lines: TerminalSegment[][] = [line(`PING ${host} (140.82.121.4) 56(84) bytes of data.`, 'muted')]
   for (let sequence = 1; sequence <= 4; sequence += 1) {
-    const time = (34 + Math.random() * 12).toFixed(1)
+    const time = (28 + Math.random() * 8).toFixed(1)
     lines.push(
       parts(
         [`64 bytes from ${host}: `, 'default'],
         [`icmp_seq=${sequence} `, 'muted'],
-        [`ttl=54 `, 'muted'],
+        [`ttl=56 `, 'muted'],
         [`time=${time} ms`, 'primary'],
       ),
     )
@@ -26,38 +26,38 @@ const pingLines = (host: string): TerminalSegment[][] => {
 }
 
 const ROUTES: Array<[string, string, string]> = [
-  ['0.0.0.0', '192.168.1.1', 'eth0'],
-  ['10.10.0.0', '0.0.0.0', 'docker0'],
-  ['172.17.0.0', '0.0.0.0', 'br-1a2b3c'],
-  ['10.43.0.0', '0.0.0.0', 'cni0'],
+  ['0.0.0.0', '192.168.1.1', 'eth0 (WAN Gateway)'],
+  ['10.10.0.0', '0.0.0.0', 'docker0 (Bridge)'],
+  ['172.17.0.0', '0.0.0.0', 'br-devsecops (Virtual)'],
+  ['10.43.0.0', '0.0.0.0', 'cni0 (k3s Kubernetes)'],
 ]
 
 export const systemCommands: CommandDefinition[] = [
   {
     name: 'ls',
     usage: 'ls',
-    summary: 'list the construct filesystem',
+    summary: 'list system files and dossiers',
     group: 'files',
     hidden: true,
     run: () =>
       instant([
-        line('total 7  ·  /construct/ghaith', 'bright'),
-        line('─'.repeat(52), 'dim'),
+        line('total 7  ·  /home/ghaith/portfolio', 'bright'),
+        line('─'.repeat(54), 'dim'),
         ...virtualFiles.map((file) =>
           parts(
             ['-rw-r--r--  ', 'dim'],
-            [file.name.padEnd(24, ' '), file.name.startsWith('secrets') ? 'danger' : 'primary'],
+            [file.name.padEnd(24, ' '), file.name.endsWith('.yaml') ? 'primary' : 'default'],
             [file.summary, 'muted'],
           ),
         ),
-        line('─'.repeat(52), 'dim'),
-        line('read one with `cat <file>`', 'muted'),
+        line('─'.repeat(54), 'dim'),
+        line('Tip: Read any file with `cat <filename>`', 'muted'),
       ]),
   },
   {
     name: 'cat',
     usage: 'cat <file>',
-    summary: 'print a file from the construct filesystem',
+    summary: 'inspect contents of a system file',
     group: 'files',
     hidden: true,
     run: (args) => {
@@ -68,7 +68,7 @@ export const systemCommands: CommandDefinition[] = [
       if (!file) {
         return {
           error: true,
-          lines: usageError(`cat: ${name}: No such file or directory`, 'try: ' + fileNames.join(', ')),
+          lines: usageError(`cat: ${name}: No such file or directory`, 'available: ' + fileNames.join(', ')),
         }
       }
       return ok(file.read())
@@ -79,41 +79,41 @@ export const systemCommands: CommandDefinition[] = [
     summary: 'print working directory',
     group: 'files',
     hidden: true,
-    run: () => ok([line('/construct/ghaith', 'primary')]),
+    run: () => ok([line('/home/ghaith/portfolio', 'primary')]),
   },
   {
     name: 'neofetch',
-    summary: 'system readout for the operator',
+    summary: 'system architecture and engineer telemetry',
     group: 'system',
     hidden: true,
     run: () => instant(neofetchLines()),
   },
   {
     name: 'banner',
-    summary: 'redraw the operator nameplate',
+    summary: 'print engineer nameplate',
     group: 'system',
     hidden: true,
     run: () => instant(bannerLines()),
   },
   {
     name: 'uptime',
-    summary: 'how long this session has been live',
+    summary: 'system uptime and load telemetry',
     group: 'system',
     hidden: true,
     run: () => {
       const seconds = Math.round(performance.now() / 1000)
       const minutes = Math.floor(seconds / 60)
       return ok([
-        parts([`${new Date().toTimeString().slice(0, 8)} `, 'muted'], ['up ', 'default'], ['19 years, 3 months', 'primary']),
-        line(`this browser session: ${minutes}m ${seconds % 60}s`, 'muted'),
-        parts(['load average: ', 'muted'], ['0.42 0.31 0.27', 'default']),
-        parts(['operators online: ', 'muted'], ['1', 'success']),
+        parts([`${new Date().toTimeString().slice(0, 8)} `, 'muted'], ['up ', 'default'], ['production grade', 'primary']),
+        line(`session time: ${minutes}m ${seconds % 60}s`, 'muted'),
+        parts(['load average: ', 'muted'], ['0.14 0.08 0.05', 'default']),
+        parts(['system status: ', 'muted'], ['100% operational', 'success']),
       ])
     },
   },
   {
     name: 'date',
-    summary: 'current system time',
+    summary: 'current system and local time',
     group: 'system',
     hidden: true,
     run: () => ok([line(new Date().toString(), 'primary')]),
@@ -121,7 +121,7 @@ export const systemCommands: CommandDefinition[] = [
   {
     name: 'echo',
     usage: 'echo <text>',
-    summary: 'write text back to the console',
+    summary: 'print text to the terminal',
     group: 'system',
     hidden: true,
     run: (args) => ok([line(args.join(' '), 'default')]),
@@ -129,24 +129,21 @@ export const systemCommands: CommandDefinition[] = [
   {
     name: 'sudo',
     usage: 'sudo <command>',
-    summary: 'attempt privilege escalation',
+    summary: 'privilege check',
     group: 'system',
     hidden: true,
     run: (args) => {
       const target = args.join(' ')
-      if (target.startsWith('rm -rf /')) {
-        return { error: true, lines: [line('nice try. the construct is read-only.', 'danger')] }
-      }
       return ok([
-        line(`${target || 'sudo'}: you are not in this story, Neo.`, 'warn'),
-        line('root access is earned, not typed.', 'muted'),
+        line(`[SECURITY AUDIT] ${target || 'sudo'}: User 'ghaith' is in sudoers group.`, 'warn'),
+        line('Production safety controls active. Read-only demonstration mode.', 'muted'),
       ])
     },
   },
   {
     name: 'ping',
     usage: 'ping <host>',
-    summary: 'check reachability of a host',
+    summary: 'test gateway and host reachability',
     group: 'system',
     hidden: true,
     run: (args) => {
@@ -156,14 +153,14 @@ export const systemCommands: CommandDefinition[] = [
   },
   {
     name: 'routing',
-    summary: 'kernel routing table',
+    summary: 'kernel network routing table',
     group: 'system',
     hidden: true,
     run: () =>
       instant([
-        line('Kernel IP routing table', 'bright'),
-        line('Destination     Gateway         Iface', 'muted'),
-        line('─'.repeat(48), 'dim'),
+        line('Kernel IP Routing Table (Enterprise Topology)', 'bright'),
+        line('Destination     Gateway         Interface', 'muted'),
+        line('─'.repeat(54), 'dim'),
         ...ROUTES.map(([destination, gateway, iface]) =>
           parts(
             [destination.padEnd(16, ' '), 'default'],
@@ -171,17 +168,17 @@ export const systemCommands: CommandDefinition[] = [
             [iface, 'primary'],
           ),
         ),
-        line('─'.repeat(48), 'dim'),
-        line('routing between the world that is and the world that could be.', 'muted'),
+        line('─'.repeat(54), 'dim'),
+        line('Static and dynamic routing managed via Cisco enterprise conventions.', 'muted'),
       ]),
   },
   {
     name: 'history',
-    summary: 'commands issued in this session',
+    summary: 'list commands issued in this session',
     group: 'system',
     hidden: true,
     run: (_args, context) => {
-      if (context.history.length === 0) return ok([line('no history yet.', 'muted')])
+      if (context.history.length === 0) return ok([line('no history recorded yet.', 'muted')])
       return ok(
         context.history.map((entry, index) => parts([`${String(index + 1).padStart(3, ' ')}  `, 'muted'], [entry, 'default'])),
       )
@@ -189,13 +186,12 @@ export const systemCommands: CommandDefinition[] = [
   },
   {
     name: 'exit',
-    summary: 'leave the construct',
+    summary: 'close console session',
     group: 'system',
     hidden: true,
     run: () =>
       ok([
-        line('logout: connection to the construct stays open.', 'warn'),
-        line('you can check out any time you like, but you can never leave.', 'muted'),
+        line('Session active. You can continue browsing the portfolio below.', 'primary'),
       ]),
   },
 ]

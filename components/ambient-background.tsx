@@ -3,13 +3,13 @@
 import * as React from 'react'
 
 /**
- * Modern Ambient Engineering Background
+ * Modern Ambient Background
  * Sleek, high-contrast dark palette with subtle floating gradient orbs and fine grid.
  */
-export default function MatrixBackground() {
+export default function AmbientBackground() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-      {/* Base deep background */}
+      {/* Base deep dark blue background */}
       <div className="absolute inset-0 bg-mx-deep" />
 
       {/* Floating ambient glow orbs */}

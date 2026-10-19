@@ -1,12 +1,12 @@
 'use client'
 
 import * as React from 'react'
-import MatrixBackground from './matrix/matrix-background'
+import AmbientBackground from './ambient-background'
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="relative min-h-screen bg-mx-deep text-mx-text antialiased">
-      <MatrixBackground />
+      <AmbientBackground />
       <div className="relative z-10">{children}</div>
     </div>
   )

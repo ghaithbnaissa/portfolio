@@ -8,7 +8,6 @@ import { Card, CardCommand, CardContent, CardHeader, CardTitle } from '../../../
 import { Button } from '../../../components/ui/button'
 import SiteHeader from '../../../components/site-header'
 import SiteFooter from '../../../components/site-footer'
-import BracketFrame from '../../../components/matrix/bracket-frame'
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }))
@@ -67,43 +66,41 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[1.3fr_0.7fr]">
-          <BracketFrame>
-            <Card className="h-full">
-              <CardCommand>
-                <Terminal className="h-3.5 w-3.5 text-mx-primary" />
-                <span>Architecture Specification</span>
-              </CardCommand>
-              <CardHeader>
-                <CardTitle className="text-xl">System Architectural Brief</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6 text-sm leading-relaxed text-mx-textDim">
-                <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">The Engineering Problem</p>
-                  <p className="text-mx-bright">{project.problem}</p>
-                </div>
+          <Card className="h-full">
+            <CardCommand>
+              <Terminal className="h-3.5 w-3.5 text-mx-primary" />
+              <span>Architecture Specification</span>
+            </CardCommand>
+            <CardHeader>
+              <CardTitle className="text-xl">System Architectural Brief</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6 text-sm leading-relaxed text-mx-textDim">
+              <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">The Engineering Problem</p>
+                <p className="text-mx-bright">{project.problem}</p>
+              </div>
 
-                <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Architectural Solution</p>
-                  <p className="text-mx-bright">{project.solution}</p>
-                </div>
+              <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Architectural Solution</p>
+                <p className="text-mx-bright">{project.solution}</p>
+              </div>
 
-                <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Topology & Dataflow</p>
-                  <p className="font-mono text-xs text-mx-bright">{project.architecture}</p>
-                </div>
+              <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Topology & Dataflow</p>
+                <p className="font-mono text-xs text-mx-bright">{project.architecture}</p>
+              </div>
 
-                <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Delivery & CI/CD Pipeline</p>
-                  <p className="text-mx-bright">{project.ciCd}</p>
-                </div>
+              <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Delivery & CI/CD Pipeline</p>
+                <p className="text-mx-bright">{project.ciCd}</p>
+              </div>
 
-                <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
-                  <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Lessons Learned & Key Takeaways</p>
-                  <p className="text-mx-bright">{project.lessons}</p>
-                </div>
-              </CardContent>
-            </Card>
-          </BracketFrame>
+              <div className="space-y-1.5 rounded-md border border-mx-line/70 bg-mx-panel2/50 p-4">
+                <p className="font-mono text-xs uppercase tracking-[0.16em] text-mx-primary">Lessons Learned & Key Takeaways</p>
+                <p className="text-mx-bright">{project.lessons}</p>
+              </div>
+            </CardContent>
+          </Card>
 
           <div className="space-y-6">
             <Card className="mx-panel-hover">

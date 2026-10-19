@@ -1,9 +1,9 @@
 'use client'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { Terminal, Sparkles } from 'lucide-react'
+import { Terminal } from 'lucide-react'
 
-import MatrixTerminal from './matrix-terminal'
+import SystemTerminal from './system-terminal'
 import OperatorDossier from './operator-dossier'
 
 export default function TerminalHero() {
@@ -18,16 +18,16 @@ export default function TerminalHero() {
         <div className="flex items-center gap-2">
           <span className="inline-flex items-center gap-1.5 rounded-full border border-mx-line bg-mx-panel px-3 py-1 font-mono text-2xs uppercase tracking-wider text-mx-primary font-medium">
             <Terminal className="h-3.5 w-3.5 text-mx-primary" />
-            <span>Executive Profile &amp; Interactive Console</span>
+            <span>Interactive Engineering Console &amp; Dossier</span>
           </span>
         </div>
         <div className="flex items-center gap-2 font-mono text-2xs text-mx-textFaint">
           <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Interactive Session · Type &apos;help&apos; to explore</span>
+          <span>Interactive Session · Click quick commands or type</span>
         </div>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.2fr)] items-stretch">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.25fr)] items-stretch">
         <motion.div
           {...entrance}
           transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: 'easeOut' }}
@@ -41,7 +41,7 @@ export default function TerminalHero() {
           transition={prefersReducedMotion ? undefined : { duration: 0.5, ease: 'easeOut', delay: 0.12 }}
           className="min-w-0"
         >
-          <MatrixTerminal className="h-full" />
+          <SystemTerminal className="h-full" />
         </motion.div>
       </div>
 

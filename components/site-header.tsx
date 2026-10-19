@@ -18,10 +18,11 @@ import { cn } from '../lib/utils'
 
 const NAV_ITEMS = [
   { label: 'About', href: '#about', id: 'about', index: '02' },
-  { label: 'Projects', href: '#projects', id: 'projects', index: '03' },
-  { label: 'Skills & Timeline', href: '#career', id: 'career', index: '04' },
-  { label: 'Certifications', href: '#certifications', id: 'certifications', index: '05' },
-  { label: 'Contact', href: '#contact', id: 'contact', index: '06' },
+  { label: 'Architecture', href: '#architecture', id: 'architecture', index: '03' },
+  { label: 'Projects', href: '#projects', id: 'projects', index: '04' },
+  { label: 'Skills & Timeline', href: '#career', id: 'career', index: '05' },
+  { label: 'Certifications', href: '#certifications', id: 'certifications', index: '06' },
+  { label: 'Contact', href: '#contact', id: 'contact', index: '07' },
 ]
 
 export default function SiteHeader() {
@@ -42,7 +43,7 @@ export default function SiteHeader() {
 
   // Interactive Scroll-Spy to highlight current section
   useEffect(() => {
-    const sectionIds = ['about', 'projects', 'career', 'certifications', 'contact']
+    const sectionIds = ['about', 'architecture', 'projects', 'career', 'certifications', 'contact']
     const handleSectionSpy = () => {
       const scrollPosition = window.scrollY + 180
 

@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { Terminal, Play, RotateCcw, Activity } from 'lucide-react'
 
 import { cn } from '../../lib/utils'
 import { buildBootSequence } from './boot-sequence'
@@ -14,7 +15,18 @@ import { useTerminalWriter } from './use-terminal-writer'
 
 const ERROR_PACE = 1500
 
-export default function MatrixTerminal({ className }: { className?: string }) {
+const QUICK_COMMANDS = [
+  { label: 'whoami', desc: 'Identity' },
+  { label: 'skills', desc: 'Technical Stack' },
+  { label: 'projects', desc: 'Featured Work' },
+  { label: 'certifications', desc: 'Cisco Badges' },
+  { label: 'recruiter', desc: 'Candidate Summary' },
+  { label: 'neofetch', desc: 'System Info' },
+  { label: 'ping', desc: 'Network Latency' },
+  { label: 'clear', desc: 'Reset Console' },
+]
+
+export default function SystemTerminal({ className }: { className?: string }) {
   const { entries, isTyping, write, clear, flush } = useTerminalWriter()
 
   const [history, setHistory] = useState<string[]>([])
@@ -139,7 +151,7 @@ export default function MatrixTerminal({ className }: { className?: string }) {
     <div
       ref={panelRef}
       className={cn(
-        'mx-panel flex h-[24rem] flex-col overflow-hidden rounded-xl border border-mx-line/80 shadow-xl transition-all duration-300 sm:h-[28rem] lg:h-[31rem]',
+        'mx-panel flex h-[26rem] flex-col overflow-hidden rounded-xl border border-mx-line/80 shadow-2xl transition-all duration-300 sm:h-[30rem] lg:h-[32rem]',
         className,
       )}
       onClick={() => {
@@ -147,23 +159,51 @@ export default function MatrixTerminal({ className }: { className?: string }) {
       }}
     >
       {/* Title bar */}
-      <div className="flex shrink-0 items-center gap-3 border-b border-mx-line bg-mx-panel2/80 px-4 py-2.5">
-        <span aria-hidden="true" className="flex items-center gap-1.5">
-          <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
-          <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
-          <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+      <div className="flex shrink-0 items-center justify-between border-b border-mx-line bg-mx-panel2/90 px-4 py-2.5 backdrop-blur-sm">
+        <div className="flex items-center gap-2.5">
+          <span aria-hidden="true" className="flex items-center gap-1.5">
+            <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+          </span>
+          <span className="truncate font-mono text-2xs text-mx-textDim sm:text-xs">
+            ghaith@devsecops-node:~$ zsh
+          </span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <span className="hidden sm:inline-flex items-center gap-1.5 font-mono text-2xs text-mx-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            <span>CLOUD SHELL ACTIVE</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Quick Interactive Command Buttons Strip */}
+      <div className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-mx-line/60 bg-mx-panel px-3 py-1.5 text-2xs scrollbar-none">
+        <span className="shrink-0 font-mono text-[10px] uppercase tracking-wider text-mx-textFaint pr-1 flex items-center gap-1">
+          <Play className="h-2.5 w-2.5 text-mx-primary" />
+          <span>Quick Run:</span>
         </span>
-        <span className="truncate font-mono text-2xs text-mx-textDim sm:text-xs">
-          ghaith@infra-node:~/portfolio — zsh
-        </span>
-        <span className="ml-auto hidden shrink-0 items-center gap-2 font-mono text-2xs text-mx-primary sm:flex">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-          <span>SESSION ACTIVE</span>
-        </span>
+        {QUICK_COMMANDS.map((cmd) => (
+          <button
+            key={cmd.label}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              handleSubmit(cmd.label)
+            }}
+            className="shrink-0 inline-flex items-center gap-1 rounded border border-mx-line/70 bg-mx-panel2/60 px-2 py-0.5 font-mono text-2xs text-mx-textDim transition-colors hover:border-mx-primary/60 hover:bg-mx-primary/10 hover:text-mx-bright active:scale-95"
+            title={`Run command: ${cmd.label} (${cmd.desc})`}
+          >
+            <span className="text-mx-primary font-semibold">$</span>
+            <span>{cmd.label}</span>
+          </button>
+        ))}
       </div>
 
       {/* Terminal Screen Body */}
-      <div className="relative min-h-0 flex-1 overflow-hidden bg-black/40">
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-black/50">
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -182,11 +222,22 @@ export default function MatrixTerminal({ className }: { className?: string }) {
       </div>
 
       {/* Terminal Status Footer */}
-      <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-mx-line bg-mx-panel2/70 px-4 py-2 font-mono text-2xs text-mx-textFaint">
-        <span className="text-mx-primary font-medium">● {sessionState}</span>
-        <span className="hidden sm:inline">{entries.length} lines</span>
-        <span>{history.length} cmds</span>
-        <span className="ml-auto hidden sm:inline">Esc skip · Tab complete · ↑↓ history</span>
+      <div className="flex shrink-0 flex-wrap items-center justify-between gap-x-4 gap-y-1 border-t border-mx-line bg-mx-panel2/80 px-4 py-2 font-mono text-2xs text-mx-textFaint">
+        <div className="flex items-center gap-3">
+          <span className="text-mx-primary font-medium flex items-center gap-1.5">
+            <Activity className="h-3 w-3" />
+            <span>{sessionState}</span>
+          </span>
+          <span className="hidden sm:inline">·</span>
+          <span className="hidden sm:inline">{entries.length} log lines</span>
+          <span className="hidden sm:inline">·</span>
+          <span>{history.length} cmds recorded</span>
+        </div>
+        <div className="hidden sm:inline-flex items-center gap-2 text-mx-textFaint">
+          <span>Tab complete</span>
+          <span>·</span>
+          <span>↑↓ history</span>
+        </div>
       </div>
     </div>
   )

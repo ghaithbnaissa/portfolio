@@ -16,13 +16,14 @@ export type VirtualFile = {
 export const virtualFiles: VirtualFile[] = [
   {
     name: 'about.md',
-    summary: 'operator profile',
+    summary: 'engineer profile & bio',
     read: () => [
       line('# ' + profile.name, 'bright'),
       line(profile.role, 'primary'),
       blank(),
-      line('I build and secure the plumbing that software runs on: networks, Linux', 'default'),
-      line('hosts, containers, pipelines and the telemetry that watches over them.', 'default'),
+      line('Computer Engineering student specializing in enterprise routing/switching,', 'default'),
+      line('Linux host administration, container orchestration (Docker/k3s), and automated', 'default'),
+      line('CI/CD security pipelines (SonarQube, Trivy, OWASP ZAP).', 'default'),
       blank(),
       parts(['location  ', 'muted'], [profile.location, 'default']),
       parts(['education ', 'muted'], [profile.education, 'default']),
@@ -50,7 +51,7 @@ export const virtualFiles: VirtualFile[] = [
   },
   {
     name: 'projects.md',
-    summary: 'featured builds',
+    summary: 'featured systems & builds',
     read: () =>
       projects.flatMap((project, index) => [
         parts([`${String(index + 1).padStart(2, '0')} `, 'primary'], [project.name, 'bright']),
@@ -62,7 +63,7 @@ export const virtualFiles: VirtualFile[] = [
   },
   {
     name: 'experience.log',
-    summary: 'timeline dump',
+    summary: 'career timeline & internships',
     read: () =>
       experience.flatMap((item) => [
         parts([`[${item.year}] `, 'primary'], [item.title, 'bright']),
@@ -73,12 +74,12 @@ export const virtualFiles: VirtualFile[] = [
   },
   {
     name: 'certifications.txt',
-    summary: 'training records',
+    summary: 'verified Cisco credentials',
     read: () =>
       certifications.map((cert) =>
         parts(
           ['  ', 'muted'],
-          ['OK  ', 'success'],
+          ['VERIFIED  ', 'success'],
           [cert.name, 'default'],
           ['  —  ' + cert.issuer, 'muted'],
         ),
@@ -86,25 +87,33 @@ export const virtualFiles: VirtualFile[] = [
   },
   {
     name: 'contact.vcf',
-    summary: 'reach me',
+    summary: 'vCard & communication channels',
     read: () => [
       line('BEGIN:VCARD', 'muted'),
       parts(['FN:', 'muted'], [profile.name, 'bright']),
       parts(['TEL:', 'muted'], [profile.phone, 'default']),
       parts(['EMAIL:', 'muted'], [profile.email, 'primary']),
       parts(['GITHUB:', 'muted'], [profile.githubUrl, 'primary']),
+      parts(['CREDLY:', 'muted'], [profile.credlyUrl, 'primary']),
       line('END:VCARD', 'muted'),
     ],
   },
   {
-    name: 'secrets/.redpill',
-    summary: 'restricted',
+    name: 'infrastructure.yaml',
+    summary: 'DevSecOps & cluster specification',
     read: () => [
-      line('[ ACCESS GRANTED — you took the red pill ]', 'danger'),
-      blank(),
-      line('There is no spoon.', 'bright'),
-      line('The site you are reading is only a rendering of the data behind it.', 'default'),
-      line('Try: `neofetch`, `matrix`, `routing`, or `bluepill`.', 'muted'),
+      line('# DevSecOps Platform Specification (Montblanc Project)', 'primary'),
+      line('ci_cd:', 'bright'),
+      line('  engine: Jenkins Multi-branch Pipeline', 'default'),
+      line('  code_quality: SonarQube Quality Gate (A rating)', 'default'),
+      line('  containerization: Docker Engine + Multistage Builds', 'default'),
+      line('  security_scanning:', 'default'),
+      line('    sast: SonarQube', 'muted'),
+      line('    vulnerability: Trivy (High/Critical CVE blocker)', 'muted'),
+      line('    dast: OWASP ZAP Automated Scan', 'muted'),
+      line('orchestration:', 'bright'),
+      line('  runtime: k3s Lightweight Kubernetes', 'default'),
+      line('  observability: Prometheus Node Exporter + Grafana + Loki', 'default'),
     ],
   },
 ]

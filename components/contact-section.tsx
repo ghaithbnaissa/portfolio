@@ -20,8 +20,7 @@ import {
 import profile from '../data/profile'
 import { Button } from './ui/button'
 import { Card, CardCommand, CardContent, CardHeader, CardTitle } from './ui/card'
-import SectionHeading from './matrix/section-heading'
-import BracketFrame from './matrix/bracket-frame'
+import SectionHeading from './section-heading'
 
 export default function ContactSection() {
   const [name, setName] = useState('')
@@ -127,9 +126,8 @@ export default function ContactSection() {
       />
 
       <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
-        <BracketFrame>
-          <Card className="h-full">
-            <CardCommand>
+        <Card className="h-full">
+          <CardCommand>
               <Send className="h-3.5 w-3.5 text-mx-primary" />
               <span>Direct Message Form</span>
             </CardCommand>
@@ -326,7 +324,6 @@ export default function ContactSection() {
               )}
             </CardContent>
           </Card>
-        </BracketFrame>
 
         <div className="flex flex-col gap-5">
           <Card className="mx-panel-hover">

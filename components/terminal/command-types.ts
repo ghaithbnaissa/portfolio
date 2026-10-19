@@ -3,13 +3,11 @@ import type { TerminalSegment } from './terminal-types'
 /** Side effects a command can ask the terminal shell to perform. */
 export type CommandEffect =
   | { type: 'clear' }
-  | { type: 'theme'; value: 'matrix' | 'recruiter' }
-  | { type: 'burst' }
   | { type: 'navigate'; target: string }
 
 export type CommandContext = {
   history: string[]
-  theme: 'matrix' | 'recruiter'
+  theme: 'recruiter'
 }
 
 export type CommandOutcome = {
