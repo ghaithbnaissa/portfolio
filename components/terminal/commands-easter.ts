@@ -1,38 +1,29 @@
 import { ok, type CommandDefinition } from './command-types'
 import { blank, line, parts } from './terminal-types'
 
-const RAIN = ['▓▓▒░░', '░▓▓▒░', '░░▓▓▒']
-
-const rainStreak = [
-  ...RAIN.map((row, index) => parts(['   ', 'dim'], [row, index === 1 ? 'primary' : 'muted'])),
-  blank(),
-]
-
 export const easterCommands: CommandDefinition[] = [
   {
-    name: 'matrix',
-    summary: 'raise the rain',
-    group: 'easter',
-    hidden: true,
-    run: (args) => {
-      const seconds = Number(args[0])
-      const duration = Number.isFinite(seconds) && seconds > 0 ? Math.min(20, seconds) : 6
-      return ok(
-        [
-          ...rainStreak,
-          line('"Unfortunately, no one can be told what the Matrix is.', 'bright'),
-          line(' You have to see it for yourself."', 'bright'),
-          line('                                     — Morpheus', 'muted'),
-          blank(),
-          parts(['rain intensity raised for ', 'muted'], [`${duration}`, 'primary'], [' seconds.', 'muted']),
-        ],
-        { effect: { type: 'burst' } },
-      )
-    },
+    name: 'recruiter',
+    summary: 'executive candidate summary for HR, recruiters & engineering managers',
+    group: 'profile',
+    run: () =>
+      ok([
+        line('EXECUTIVE CANDIDATE SUMMARY // HR & RECRUITER VIEW', 'bright'),
+        line('─'.repeat(54), 'dim'),
+        parts(['Name:       ', 'muted'], ['Ghaith Ben Aissa', 'bright']),
+        parts(['Role:       ', 'muted'], ['Computer Engineering Student — Network Expert', 'primary']),
+        parts(['Target:     ', 'muted'], ['DevSecOps Engineer | Network Admin | Cloud Infra', 'default']),
+        parts(['Degrees:    ', 'muted'], ["Master's in Network Engineering (2026-2028)", 'default']),
+        parts(['Certs:      ', 'muted'], ['Cisco CCNA Certified, Cybersecurity, Troubleshooting', 'default']),
+        parts(['Experience: ', 'muted'], ['Montblanc DevSecOps CI/CD Platform, Proxmox virtualization', 'default']),
+        parts(['Status:     ', 'muted'], ['Open for 2026 Internships & Graduate Positions', 'success']),
+        line('─'.repeat(54), 'dim'),
+        line('Tip: Download the full CV directly with `resume` or the header button.', 'muted'),
+      ]),
   },
   {
     name: 'spoon',
-    summary: 'the spoon is not real',
+    summary: 'philosophical reminder',
     group: 'easter',
     hidden: true,
     run: () =>
@@ -45,99 +36,14 @@ export const easterCommands: CommandDefinition[] = [
       ]),
   },
   {
-    name: 'neo',
-    summary: 'wake up',
-    group: 'easter',
-    hidden: true,
-    run: () =>
-      ok(
-        [...rainStreak, line('Wake up, Neo...', 'bright'), line('The Matrix has you.', 'primary')],
-        { effect: { type: 'burst' } },
-      ),
-  },
-  {
-    name: 'wake',
-    summary: 'wake up',
-    group: 'easter',
-    hidden: true,
-    run: () =>
-      ok(
-        [...rainStreak, line('Follow the white rabbit.', 'primary'), line('Knock, knock, Neo.', 'bright')],
-        { effect: { type: 'burst' } },
-      ),
-  },
-  {
-    name: 'recruiter',
-    summary: 'clean executive candidate summary for HR, recruiters & CEOs',
-    group: 'profile',
-    hidden: true,
-    run: () =>
-      ok(
-        [
-          line('EXECUTIVE CANDIDATE SUMMARY // HR & RECRUITER VIEW', 'bright'),
-          line('─'.repeat(54), 'dim'),
-          parts(['Name:       ', 'muted'], ['Ghaith Ben Aissa', 'bright']),
-          parts(['Role:       ', 'muted'], ['Computer Engineering Student — Network Expert', 'primary']),
-          parts(['Target:     ', 'muted'], ['DevSecOps Engineer | Network Admin | Cloud Infra', 'default']),
-          parts(['Degrees:    ', 'muted'], ['Master\'s (2026-2028), Bachelor\'s (2023-2026)', 'default']),
-          parts(['Certs:      ', 'muted'], ['Cisco CCNA, Cybersecurity, Network Troubleshooting', 'default']),
-          parts(['Clearance:  ', 'muted'], ['DevSecOps Shift-Left Security & Automation', 'default']),
-          parts(['Status:     ', 'muted'], ['Open for 2026 Internships & Graduate Positions', 'success']),
-          blank(),
-          line('Switched to clean, distraction-free Recruiter mode.', 'muted'),
-        ],
-        { effect: { type: 'theme', value: 'recruiter' } },
-      ),
-  },
-  {
-    name: 'redpill',
-    summary: 'switch to clean recruiter mode',
-    group: 'easter',
-    hidden: true,
-    run: () =>
-      ok(
-        [
-          line('You take the red pill.', 'danger'),
-          line('See the clean truth — candidate credentials, zero distraction.', 'default'),
-          blank(),
-          parts(['mode engaged: ', 'muted'], ['RECRUITER / HR', 'warn'], [' — executive clarity.', 'muted']),
-        ],
-        { effect: { type: 'theme', value: 'recruiter' } },
-      ),
-  },
-  {
-    name: 'bluepill',
-    summary: 'stay in the construct',
-    group: 'easter',
-    hidden: true,
-    run: () =>
-      ok(
-        [
-          line('You take the blue pill.', 'primary'),
-          line('Welcome back to the Matrix construct.', 'default'),
-          blank(),
-          parts(['mode engaged: ', 'muted'], ['MATRIX', 'success'], [' — green phosphor & rain restored.', 'muted']),
-        ],
-        { effect: { type: 'theme', value: 'matrix' } },
-      ),
-  },
-  {
     name: 'theme',
-    usage: 'theme [matrix|recruiter]',
-    summary: 'switch between Matrix (Tech) and Recruiter (Clean) modes',
+    summary: 'theme status',
     group: 'easter',
     hidden: true,
-    run: (args, context) => {
-      const target = (args[0] ?? '').toLowerCase()
-      if (target !== 'matrix' && target !== 'recruiter') {
-        return ok([
-          parts(['current mode  ', 'muted'], [context.theme.toUpperCase(), 'primary']),
-          line('switch with `theme matrix` or `theme recruiter`.', 'muted'),
-        ])
-      }
-      return ok([parts(['mode -> ', 'muted'], [target.toUpperCase(), 'primary'])], {
-        effect: { type: 'theme', value: target as 'matrix' | 'recruiter' },
-      })
-    },
+    run: () =>
+      ok([
+        parts(['Active Theme: ', 'muted'], ['Professional Dark Navy (Unified)', 'primary']),
+        line('Clean, distraction-free view designed for recruiters and engineering leads.', 'default'),
+      ]),
   },
 ]

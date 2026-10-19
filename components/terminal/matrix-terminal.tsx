@@ -1,16 +1,12 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useTheme } from 'next-themes'
 
 import { cn } from '../../lib/utils'
-import DigitalRain from '../matrix/digital-rain'
-import { useRainBurst } from '../matrix/use-rain-burst'
 import { buildBootSequence } from './boot-sequence'
 import { onTerminalCommand } from './command-bus'
 import { runCommand } from './commands'
 import type { CommandContext } from './command-types'
-import { SHELL_PATH, SHELL_USER } from './terminal-config'
 import TerminalOutput from './terminal-output'
 import TerminalPrompt, { type TerminalPromptHandle } from './terminal-prompt'
 import { line, type TerminalStep } from './terminal-types'
@@ -18,16 +14,8 @@ import { useTerminalWriter } from './use-terminal-writer'
 
 const ERROR_PACE = 1500
 
-type PhosphorTheme = 'matrix' | 'recruiter'
-
-function resolveTheme(theme: string | undefined): PhosphorTheme {
-  return theme === 'recruiter' ? 'recruiter' : 'matrix'
-}
-
 export default function MatrixTerminal({ className }: { className?: string }) {
   const { entries, isTyping, write, clear, flush } = useTerminalWriter()
-  const { theme, setTheme } = useTheme()
-  const { burst, trigger } = useRainBurst()
 
   const [history, setHistory] = useState<string[]>([])
   const historyRef = useRef<string[]>([])
@@ -36,8 +24,6 @@ export default function MatrixTerminal({ className }: { className?: string }) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const stickToBottomRef = useRef(true)
   const bootedRef = useRef(false)
-
-  const phosphor = resolveTheme(theme)
 
   /* Cold open, once per page load. */
   useEffect(() => {
@@ -104,7 +90,7 @@ export default function MatrixTerminal({ className }: { className?: string }) {
       historyRef.current = nextHistory
       setHistory(nextHistory)
 
-      const context: CommandContext = { history: nextHistory, theme: phosphor }
+      const context: CommandContext = { history: nextHistory, theme: 'recruiter' }
       const outcome = runCommand(raw, context)
 
       if (outcome.effect?.type === 'clear') {
@@ -127,12 +113,6 @@ export default function MatrixTerminal({ className }: { className?: string }) {
       }
 
       switch (outcome.effect?.type) {
-        case 'theme':
-          setTheme(outcome.effect.value)
-          break
-        case 'burst':
-          trigger()
-          break
         case 'navigate':
           navigate(outcome.effect.target)
           break
@@ -140,10 +120,10 @@ export default function MatrixTerminal({ className }: { className?: string }) {
           break
       }
     },
-    [clear, navigate, phosphor, setTheme, trigger, write],
+    [clear, navigate, write],
   )
 
-  /* Chips and links elsewhere on the page can drive the shell. */
+  /* Connect the quick-command bus */
   useEffect(
     () =>
       onTerminalCommand((command) => {
@@ -153,20 +133,20 @@ export default function MatrixTerminal({ className }: { className?: string }) {
     [handleSubmit],
   )
 
-  const sessionState = isTyping ? 'STREAMING' : 'IDLE'
+  const sessionState = isTyping ? 'STREAMING' : 'READY'
 
   return (
     <div
       ref={panelRef}
       className={cn(
-        'mx-panel flex h-[24rem] flex-col overflow-hidden rounded-lg transition-[box-shadow,border-color] duration-500 sm:h-[28rem] lg:h-[31rem]',
-        burst && 'border-mx-primary/60 shadow-glow-lg',
+        'mx-panel flex h-[24rem] flex-col overflow-hidden rounded-xl border border-mx-line/80 shadow-xl transition-all duration-300 sm:h-[28rem] lg:h-[31rem]',
         className,
       )}
       onClick={() => {
         if (!window.getSelection()?.toString()) focusPrompt()
       }}
     >
+      {/* Title bar */}
       <div className="flex shrink-0 items-center gap-3 border-b border-mx-line bg-mx-panel2/80 px-4 py-2.5">
         <span aria-hidden="true" className="flex items-center gap-1.5">
           <span className="h-2.5 w-2.5 rounded-full bg-red-500/80" />
@@ -177,16 +157,13 @@ export default function MatrixTerminal({ className }: { className?: string }) {
           ghaith@infra-node:~/portfolio — zsh
         </span>
         <span className="ml-auto hidden shrink-0 items-center gap-2 font-mono text-2xs text-mx-primary sm:flex">
-          <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-          LIVE SESSION
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span>SESSION ACTIVE</span>
         </span>
       </div>
 
-      <div className="mx-crt-surface relative min-h-0 flex-1 overflow-hidden">
-        <div className="pointer-events-none absolute inset-0 opacity-[0.16]">
-          <DigitalRain fontSize={13} speed={7} density={0.55} fade={0.06} opacity={1} />
-        </div>
-
+      {/* Terminal Screen Body */}
+      <div className="relative min-h-0 flex-1 overflow-hidden bg-black/40">
         <div
           ref={scrollRef}
           onScroll={handleScroll}
@@ -204,10 +181,11 @@ export default function MatrixTerminal({ className }: { className?: string }) {
         </div>
       </div>
 
+      {/* Terminal Status Footer */}
       <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-t border-mx-line bg-mx-panel2/70 px-4 py-2 font-mono text-2xs text-mx-textFaint">
-        <span className="text-mx-primary-dim">▚ {sessionState}</span>
+        <span className="text-mx-primary font-medium">● {sessionState}</span>
         <span className="hidden sm:inline">{entries.length} lines</span>
-        <span>{history.length} cmd</span>
+        <span>{history.length} cmds</span>
         <span className="ml-auto hidden sm:inline">Esc skip · Tab complete · ↑↓ history</span>
       </div>
     </div>

@@ -23,7 +23,7 @@ export default function CertificationsSection() {
               <div>
                 <CardCommand>
                   <Award className="h-3.5 w-3.5 text-mx-primary" />
-                  <span>cert://cisco</span>
+                  <span>Verified Cisco Credential</span>
                 </CardCommand>
                 <CardHeader className="pb-2">
                   <div className="flex items-start justify-between gap-3">

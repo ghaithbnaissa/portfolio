@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { cn } from '../../lib/utils'
 
 type GlitchTextProps = {
@@ -6,19 +7,8 @@ type GlitchTextProps = {
 }
 
 /**
- * Renders text with two offset, screen-blended duplicates clipped to random
- * slices — the CRT chromatic-aberration flicker from the Matrix interfaces.
+ * Clean text component (formerly glitch text) providing pristine, crisp typography.
  */
 export default function GlitchText({ text, className }: GlitchTextProps) {
-  return (
-    <span className={cn('mx-glitch', className)}>
-      {text}
-      <span aria-hidden="true" className="mx-glitch__layer mx-glitch__layer--a">
-        {text}
-      </span>
-      <span aria-hidden="true" className="mx-glitch__layer mx-glitch__layer--b">
-        {text}
-      </span>
-    </span>
-  )
+  return <span className={cn('tracking-tight font-display', className)}>{text}</span>
 }

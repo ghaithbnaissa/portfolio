@@ -37,7 +37,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
         <Card className="mx-panel-hover">
           <CardCommand>
             <FolderGit2 className="h-3.5 w-3.5 text-mx-primary" />
-            <span>git://repos/count</span>
+            <span>Source Repositories</span>
           </CardCommand>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs font-mono uppercase tracking-[0.18em] text-mx-textDim">
@@ -55,7 +55,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
         <Card className="mx-panel-hover">
           <CardCommand>
             <GitPullRequest className="h-3.5 w-3.5 text-mx-primary" />
-            <span>git://activity/pushes</span>
+            <span>Commit Activity</span>
           </CardCommand>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs font-mono uppercase tracking-[0.18em] text-mx-textDim">
@@ -73,7 +73,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
         <Card className="mx-panel-hover">
           <CardCommand>
             <Github className="h-3.5 w-3.5 text-mx-primary" />
-            <span>net://network/followers</span>
+            <span>Developer Network</span>
           </CardCommand>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs font-mono uppercase tracking-[0.18em] text-mx-textDim">
@@ -91,7 +91,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
         <Card className="mx-panel-hover">
           <CardCommand>
             <Github className="h-3.5 w-3.5 text-mx-primary" />
-            <span>net://network/following</span>
+            <span>Community</span>
           </CardCommand>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs font-mono uppercase tracking-[0.18em] text-mx-textDim">
@@ -112,7 +112,8 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
           <BracketFrame key={repo.html_url} onHover size={12}>
             <Card className="mx-panel-hover flex h-full flex-col justify-between">
               <CardCommand>
-                <span className="text-mx-primary font-mono">repo://{repo.name}</span>
+                <FolderGit2 className="h-3.5 w-3.5 text-mx-primary" />
+                <span className="text-mx-primary font-mono">{repo.name}</span>
               </CardCommand>
               <CardHeader>
                 <div className="flex items-start justify-between gap-4">

@@ -130,8 +130,8 @@ export default function ContactSection() {
         <BracketFrame>
           <Card className="h-full">
             <CardCommand>
-              <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-              <span>contact://send_message</span>
+              <Send className="h-3.5 w-3.5 text-mx-primary" />
+              <span>Direct Message Form</span>
             </CardCommand>
             <CardHeader>
               <CardTitle>Send a Message</CardTitle>
@@ -145,20 +145,20 @@ export default function ContactSection() {
                   <div className="rounded-md border border-mx-primary/40 bg-mx-primary/10 p-4">
                     <div className="flex items-center gap-2 text-mx-bright font-semibold">
                       <CheckCircle2 className="h-5 w-5 text-mx-primary" />
-                      <span>TRANSMISSION ACKNOWLEDGED</span>
+                      <span>Message Sent Successfully</span>
                     </div>
-                    <p className="mt-2 text-xs text-mx-textDim leading-relaxed">
-                      Your message packet has been routed and confirmed. I will respond to your address shortly.
+                    <p className="mt-2 text-xs text-mx-textDim leading-relaxed font-sans">
+                      Thank you for reaching out. Your message has been delivered to Ghaith and you will receive a response shortly.
                     </p>
                     <div className="mt-3 space-y-1 text-2xs border-t border-mx-line/60 pt-2.5 text-mx-textFaint">
                       <div>
-                        PACKET ID: <span className="text-mx-primary font-bold">{transmissionId}</span>
+                        Confirmation ID: <span className="text-mx-primary font-bold">{transmissionId}</span>
                       </div>
                       <div>
-                        RECIPIENT: <span className="text-mx-bright">{profile.email}</span>
+                        Recipient: <span className="text-mx-bright">{profile.email}</span>
                       </div>
                       <div>
-                        SENDER: <span className="text-mx-bright">{name} &lt;{email}&gt;</span>
+                        From: <span className="text-mx-bright">{name} &lt;{email}&gt;</span>
                       </div>
                     </div>
                   </div>
@@ -278,7 +278,7 @@ export default function ContactSection() {
                       {status === 'transmitting' ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin text-mx-bright" />
-                          <span>Transmitting...</span>
+                          <span>Sending message...</span>
                         </>
                       ) : (
                         <>
@@ -331,7 +331,8 @@ export default function ContactSection() {
         <div className="flex flex-col gap-5">
           <Card className="mx-panel-hover">
             <CardCommand>
-              <span>contact://direct_channels</span>
+              <Mail className="h-3.5 w-3.5 text-mx-primary" />
+              <span>Direct Communication Channels</span>
             </CardCommand>
             <CardHeader>
               <CardTitle>Direct Channels</CardTitle>
@@ -422,7 +423,8 @@ export default function ContactSection() {
 
           <Card className="mx-panel-hover">
             <CardCommand>
-              <span>contact://availability</span>
+              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+              <span>Availability &amp; Focus Areas</span>
             </CardCommand>
             <CardHeader>
               <CardTitle>Open for Opportunities</CardTitle>

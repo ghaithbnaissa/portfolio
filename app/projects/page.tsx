@@ -31,9 +31,9 @@ export default function ProjectsPage() {
         </div>
 
         <SectionHeading
-          index="ARCHIVE // DEPLOYMENTS"
-          title="System Deployments"
-          kicker="// production pipelines, virtualization & observability architectures"
+          index="03 · ARCHIVE"
+          title="System Architecture Projects"
+          kicker="Production pipelines, virtualization & observability architectures"
           icon={ShieldCheck}
         />
 
@@ -43,8 +43,8 @@ export default function ProjectsPage() {
               <Card className="mx-panel-hover flex h-full flex-col justify-between">
                 <div>
                   <CardCommand>
-                    <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-                    <span>prj://{project.slug}</span>
+                    <ShieldCheck className="h-3.5 w-3.5 text-mx-primary" />
+                    <span className="font-sans font-medium">{project.name}</span>
                   </CardCommand>
                   <CardHeader>
                     <CardTitle className="text-xl">{project.name}</CardTitle>

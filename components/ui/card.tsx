@@ -1,17 +1,16 @@
 import * as React from 'react'
-
 import { cn } from '../../lib/utils'
 
 function Card({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('mx-panel rounded-lg', className)} {...props} />
+  return <div className={cn('mx-panel rounded-xl border border-mx-line/70 shadow-sm transition-all duration-200', className)} {...props} />
 }
 
-/** Thin banner strip pinned to the top of a card, like a terminal title bar. */
+/** Subtle header strip pinned to the top of a card */
 function CardCommand({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       className={cn(
-        'flex items-center gap-2 rounded-t-lg border-b border-mx-line bg-mx-panel2/70 px-4 py-1.5 font-mono text-2xs text-mx-textDim',
+        'flex items-center gap-2 rounded-t-xl border-b border-mx-line/60 bg-mx-panel2/50 px-4 py-2 font-mono text-2xs text-mx-textDim',
         className,
       )}
       {...props}
@@ -24,7 +23,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
-  return <div className={cn('font-display text-base tracking-[0.06em] text-mx-bright', className)} {...props} />
+  return <div className={cn('font-sans font-bold text-base sm:text-lg tracking-tight text-mx-bright', className)} {...props} />
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {

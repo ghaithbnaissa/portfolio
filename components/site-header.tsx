@@ -8,19 +8,18 @@ import {
   Menu,
   Terminal,
   X,
-  ArrowUpRight,
-  Sparkles,
+  Award,
+  Mail,
 } from 'lucide-react'
 
 import profile from '../data/profile'
-import { PhosphorToggle } from './phosphor-toggle'
 import { dispatchTerminalCommand } from './terminal/command-bus'
 import { cn } from '../lib/utils'
 
 const NAV_ITEMS = [
   { label: 'About', href: '#about', id: 'about', index: '02' },
   { label: 'Projects', href: '#projects', id: 'projects', index: '03' },
-  { label: 'Career', href: '#career', id: 'career', index: '04' },
+  { label: 'Skills & Timeline', href: '#career', id: 'career', index: '04' },
   { label: 'Certifications', href: '#certifications', id: 'certifications', index: '05' },
   { label: 'Contact', href: '#contact', id: 'contact', index: '06' },
 ]
@@ -101,8 +100,8 @@ export default function SiteHeader() {
       className={cn(
         'sticky top-0 z-50 transition-all duration-300',
         isScrolled
-          ? 'border-b border-mx-line/80 bg-mx-deep/95 shadow-lg shadow-black/40 backdrop-blur-xl py-2.5 sm:py-3'
-          : 'border-b border-mx-line/50 bg-mx-deep/80 backdrop-blur-md py-3 sm:py-3.5',
+          ? 'border-b border-mx-line/80 bg-mx-deep/95 shadow-xl shadow-black/40 backdrop-blur-xl py-2.5 sm:py-3'
+          : 'border-b border-mx-line/40 bg-mx-deep/80 backdrop-blur-md py-3 sm:py-3.5',
       )}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 sm:gap-6 sm:px-6 lg:px-8">
@@ -115,9 +114,9 @@ export default function SiteHeader() {
               window.scrollTo({ top: 0, behavior: 'smooth' })
             }
           }}
-          className="group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-90"
+          className="group flex shrink-0 items-center gap-3 transition-opacity hover:opacity-95"
         >
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-mx-primary/50 bg-mx-panel/90 font-mono text-xs font-bold text-mx-bright shadow-sm transition-all group-hover:border-mx-primary group-hover:shadow-[0_0_15px_rgba(0,255,136,0.25)]">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-mx-primary/40 bg-mx-panel font-mono text-xs font-bold text-mx-bright shadow-sm transition-all group-hover:border-mx-primary group-hover:shadow-[0_0_15px_rgba(59,130,246,0.25)]">
             <span>GB</span>
             <span
               aria-hidden="true"
@@ -126,12 +125,12 @@ export default function SiteHeader() {
           </div>
 
           <div className="leading-tight">
-            <span className="block font-sans text-sm sm:text-base font-semibold tracking-tight text-mx-bright group-hover:text-mx-primary transition-colors">
+            <span className="block font-sans text-sm sm:text-base font-bold tracking-tight text-mx-bright group-hover:text-mx-primary transition-colors">
               {profile.name}
             </span>
-            <span className="flex items-center gap-1.5 font-mono text-[11px] text-mx-textDim">
-              <span className="h-1.5 w-1.5 rounded-full bg-mx-primary/70" />
-              <span>Networks · DevSecOps · Support</span>
+            <span className="flex items-center gap-1.5 font-sans text-[11px] text-mx-textDim">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+              <span>Networks · DevSecOps · Systems</span>
             </span>
           </div>
         </Link>
@@ -164,14 +163,14 @@ export default function SiteHeader() {
           })}
         </nav>
 
-        {/* Action Controls & Toggles */}
+        {/* Action Controls */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           {/* Quick Terminal Launcher */}
           <button
             type="button"
             onClick={launchTerminal}
             className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-mx-line bg-mx-panel/80 px-2.5 py-1.5 font-mono text-xs text-mx-textDim transition-colors hover:border-mx-primary/50 hover:bg-mx-primary/10 hover:text-mx-bright"
-            title="Launch interactive terminal CLI"
+            title="Launch interactive CLI console"
           >
             <Terminal className="h-3.5 w-3.5 text-mx-primary" />
             <span className="font-medium">CLI</span>
@@ -181,11 +180,24 @@ export default function SiteHeader() {
           <a
             href="/resume.pdf"
             download
-            className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-mx-primary/40 bg-mx-primary/10 px-2.5 py-1.5 font-mono text-xs font-semibold text-mx-bright transition-all hover:border-mx-primary hover:bg-mx-primary/20 hover:shadow-[0_0_12px_rgba(0,255,136,0.2)]"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-md border border-mx-primary/40 bg-mx-primary/10 px-3 py-1.5 font-sans text-xs font-semibold text-mx-bright transition-all hover:border-mx-primary hover:bg-mx-primary/20 hover:shadow-[0_0_12px_rgba(59,130,246,0.25)]"
             title="Download Ghaith's CV (PDF)"
           >
             <FileDown className="h-3.5 w-3.5 text-mx-primary" />
             <span>CV</span>
+          </a>
+
+          {/* Credly Verified Link */}
+          <a
+            href={profile.credlyUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="hidden lg:inline-flex h-8 items-center gap-1.5 rounded-md border border-mx-line bg-mx-panel/80 px-2 text-mx-textDim transition-colors hover:border-mx-primary/60 hover:bg-mx-primary/10 hover:text-mx-bright text-xs"
+            aria-label="Verified Cisco Credly Badges"
+            title="View Cisco Verified Credentials on Credly"
+          >
+            <Award className="h-3.5 w-3.5 text-mx-primary" />
+            <span className="font-mono text-2xs">Cisco CCNA</span>
           </a>
 
           {/* GitHub Icon Link */}
@@ -200,10 +212,15 @@ export default function SiteHeader() {
             <Github className="h-4 w-4" />
           </a>
 
-          {/* View Mode Toggle (Matrix vs Recruiter) */}
-          <div className="hidden lg:block">
-            <PhosphorToggle compact />
-          </div>
+          {/* Direct Email Link */}
+          <a
+            href={`mailto:${profile.email}`}
+            className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-mx-line bg-mx-panel/80 text-mx-textDim transition-colors hover:border-mx-primary/60 hover:bg-mx-primary/10 hover:text-mx-bright"
+            aria-label="Email Ghaith"
+            title="Send Email"
+          >
+            <Mail className="h-4 w-4" />
+          </a>
 
           {/* Mobile Hamburger Toggle */}
           <button
@@ -220,7 +237,7 @@ export default function SiteHeader() {
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden animate-rise-in border-t border-mx-line/70 bg-mx-deep/98 px-4 py-4 shadow-xl backdrop-blur-2xl">
+        <div className="md:hidden animate-rise-in border-t border-mx-line/70 bg-mx-deep/98 px-4 py-4 shadow-2xl backdrop-blur-2xl">
           <nav className="space-y-1 pb-3">
             {NAV_ITEMS.map((item) => {
               const isActive = activeSection === item.id
@@ -261,16 +278,11 @@ export default function SiteHeader() {
               <a
                 href="/resume.pdf"
                 download
-                className="inline-flex items-center justify-center gap-2 rounded-md border border-mx-primary/50 bg-mx-primary/10 p-2 font-mono text-xs font-semibold text-mx-bright hover:bg-mx-primary/20"
+                className="inline-flex items-center justify-center gap-2 rounded-md border border-mx-primary/50 bg-mx-primary/10 p-2 font-sans text-xs font-semibold text-mx-bright hover:bg-mx-primary/20"
               >
                 <FileDown className="h-3.5 w-3.5 text-mx-primary" />
                 <span>Download CV</span>
               </a>
-            </div>
-
-            <div className="flex items-center justify-between pt-1">
-              <span className="font-mono text-2xs text-mx-textFaint">View mode:</span>
-              <PhosphorToggle compact />
             </div>
           </div>
         </div>

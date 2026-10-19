@@ -176,7 +176,9 @@ export default function CareerTabs() {
                 <BracketFrame onHover size={12}>
                   <Card className="mx-panel-hover">
                     <CardCommand>
-                      <span>record://{item.year.toLowerCase().replace(/[^a-z0-9]/g, '_')}</span>
+                      <Briefcase className="h-3 w-3 text-mx-primary" />
+                      <span>{item.organization}</span>
+                      <span className="ml-auto font-mono text-mx-primary">{item.year}</span>
                     </CardCommand>
                     <CardHeader className="pb-3">
                       <div className="flex flex-wrap items-center justify-between gap-2">

@@ -39,14 +39,14 @@ export default function Home() {
       <SiteHeader />
       <RecruiterBanner />
 
-      <main id="main-content" className="space-y-20 pb-24">
+      <main id="main-content" className="space-y-24 pb-24">
         {/* 01: HERO & INTERACTIVE CONSOLE */}
         <TerminalHero />
 
-        {/* 02: ABOUT & SYSTEM TELEMETRY (CONSOLIDATED & ORGANIZED) */}
+        {/* 02: ABOUT & ENGINEERING BACKGROUND */}
         <SectionReveal id="about" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 scroll-mt-28">
           <SectionHeading
-            index="02 / ABOUT"
+            index="02 · ABOUT"
             title="Engineering Background"
             kicker="Networks · DevSecOps · Cloud Infrastructure"
             icon={Activity}
@@ -57,8 +57,8 @@ export default function Home() {
             <BracketFrame>
               <Card className="h-full">
                 <CardCommand>
-                  <Terminal className="h-3.5 w-3.5 text-mx-primary" />
-                  <span>profile://summary</span>
+                  <Activity className="h-3.5 w-3.5 text-mx-primary" />
+                  <span>Executive Summary</span>
                 </CardCommand>
                 <CardHeader>
                   <CardTitle className="text-xl">Who I Am</CardTitle>
@@ -75,7 +75,7 @@ export default function Home() {
                   <div className="pt-2 border-t border-mx-line/50 flex flex-wrap gap-2 items-center">
                     <span className="font-mono text-2xs uppercase tracking-wider text-mx-textFaint">Languages:</span>
                     {profile.languages.map((lang) => (
-                      <Badge key={lang} variant="outline" className="text-2xs">
+                      <Badge key={lang} variant="outline" className="text-2xs font-sans">
                         {lang}
                       </Badge>
                     ))}
@@ -104,12 +104,12 @@ export default function Home() {
               <BracketFrame onHover size={10}>
                 <Card className="mx-panel-hover">
                   <CardCommand>
-                    <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-                    <span>credential://degree</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-mx-primary" />
+                    <span>Education &amp; Credentials</span>
                   </CardCommand>
                   <CardHeader className="pb-1.5">
                     <p className="font-mono text-2xs uppercase tracking-[0.2em] text-mx-textFaint">EDUCATION</p>
-                    <CardTitle className="text-base text-mx-bright">Master's — Network Engineering</CardTitle>
+                    <CardTitle className="text-base text-mx-bright">Master&apos;s — Network Engineering</CardTitle>
                   </CardHeader>
                   <CardContent className="text-xs leading-relaxed text-mx-textDim">
                     Specializing in enterprise networks, routing, switching, and cybersecurity. CCNA Certified with 5+ verified Cisco badges.
@@ -120,11 +120,11 @@ export default function Home() {
               <BracketFrame onHover size={10}>
                 <Card className="mx-panel-hover">
                   <CardCommand>
-                    <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-                    <span>project://montblanc</span>
+                    <span className="h-1.5 w-1.5 rounded-full bg-mx-primary" />
+                    <span>Featured Engineering Project</span>
                   </CardCommand>
                   <CardHeader className="pb-1.5">
-                    <p className="font-mono text-2xs uppercase tracking-[0.2em] text-mx-textFaint">FEATURED WORK</p>
+                    <p className="font-mono text-2xs uppercase tracking-[0.2em] text-mx-textFaint">FLAGSHIP WORK</p>
                     <CardTitle className="text-base text-mx-bright">DevSecOps Platform</CardTitle>
                   </CardHeader>
                   <CardContent className="text-xs leading-relaxed text-mx-textDim">
@@ -139,9 +139,9 @@ export default function Home() {
         {/* 03: FEATURED PROJECTS */}
         <SectionReveal id="projects" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 scroll-mt-28">
           <SectionHeading
-            index="03 / PROJECTS"
+            index="03 · PROJECTS"
             title="Featured Projects"
-            kicker="Real-world systems built from scratch"
+            kicker="Real-world infrastructure and software systems"
             icon={ShieldCheck}
           />
           <div className="grid gap-6 md:grid-cols-3">
@@ -150,8 +150,8 @@ export default function Home() {
                 <Card className="mx-panel-hover flex h-full flex-col justify-between">
                   <div>
                     <CardCommand>
-                      <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
-                      <span>prj://{project.slug}</span>
+                      <ShieldCheck className="h-3.5 w-3.5 text-mx-primary" />
+                      <span className="font-sans font-medium">{project.name}</span>
                     </CardCommand>
                     <CardHeader>
                       <CardTitle className="text-xl">{project.name}</CardTitle>
@@ -161,12 +161,12 @@ export default function Home() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="rounded-md border border-mx-line/60 bg-mx-panel2/40 p-3 text-xs leading-relaxed text-mx-textDim">
-                        <p className="font-mono text-2xs uppercase tracking-[0.16em] text-mx-primary">Architecture</p>
+                        <p className="font-mono text-2xs uppercase tracking-[0.16em] text-mx-primary font-medium">Architecture</p>
                         <p className="mt-1 font-mono text-2xs text-mx-bright">{project.architecture}</p>
                       </div>
                       <div className="flex flex-wrap gap-1.5">
                         {project.stack.map((tech) => (
-                          <Badge key={tech} variant="outline" className="text-2xs">
+                          <Badge key={tech} variant="outline" className="text-2xs font-mono">
                             {tech}
                           </Badge>
                         ))}
@@ -177,18 +177,18 @@ export default function Home() {
                     <div className="flex items-center justify-between">
                       <Link
                         href={`/projects/${project.slug}`}
-                        className="inline-flex items-center gap-1.5 font-mono text-xs text-mx-primary transition-colors hover:text-mx-bright hover:underline"
+                        className="inline-flex items-center gap-1.5 font-sans font-medium text-xs text-mx-primary transition-colors hover:text-mx-bright hover:underline"
                       >
-                        <span>Deep Dive</span>
+                        <span>Deep Dive Architecture</span>
                         <ArrowRight className="h-3.5 w-3.5" />
                       </Link>
                       <a
                         href={project.repoUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 font-mono text-2xs text-mx-textFaint hover:text-mx-bright"
+                        className="inline-flex items-center gap-1 font-sans text-xs text-mx-textFaint hover:text-mx-bright transition-colors"
                       >
-                        <span>Repo</span>
+                        <span>Source</span>
                         <ExternalLink className="h-3 w-3" />
                       </a>
                     </div>
@@ -199,12 +199,12 @@ export default function Home() {
           </div>
         </SectionReveal>
 
-        {/* 04: CAREER & TECHNICAL ARSENAL (TABBED CONTROLLER) */}
+        {/* 04: SKILLS & TIMELINE */}
         <SectionReveal id="career" className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 scroll-mt-28">
           <SectionHeading
-            index="04 / CAREER"
-            title="Skills & Experience"
-            kicker="Technical stack and career timeline"
+            index="04 · CAREER"
+            title="Skills &amp; Experience"
+            kicker="Technical competencies and professional timeline"
             icon={Layers}
           />
           <CareerTabs />

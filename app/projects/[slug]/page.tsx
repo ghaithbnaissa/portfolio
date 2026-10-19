@@ -71,7 +71,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <Card className="h-full">
               <CardCommand>
                 <Terminal className="h-3.5 w-3.5 text-mx-primary" />
-                <span>manifest://{project.slug}/overview</span>
+                <span>Architecture Specification</span>
               </CardCommand>
               <CardHeader>
                 <CardTitle className="text-xl">System Architectural Brief</CardTitle>
@@ -109,7 +109,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <Card className="mx-panel-hover">
               <CardCommand>
                 <Layers className="h-3.5 w-3.5 text-mx-primary" />
-                <span>stack://technologies</span>
+                <span>Technologies &amp; Tooling</span>
               </CardCommand>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Target Stack & Tools</CardTitle>
@@ -128,7 +128,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <Card className="mx-panel-hover">
               <CardCommand>
                 <ExternalLink className="h-3.5 w-3.5 text-mx-primary" />
-                <span>endpoints://links</span>
+                <span>Source &amp; Repository</span>
               </CardCommand>
               <CardHeader className="pb-3">
                 <CardTitle className="text-base">Source & Deployment</CardTitle>
