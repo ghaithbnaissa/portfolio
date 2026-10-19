@@ -10,6 +10,7 @@ const OPTIONS = [
   {
     id: 'matrix',
     label: 'MATRIX',
+    shortLabel: 'Matrix',
     pill: 'bg-[#00ff88]',
     icon: Terminal,
     title: 'Matrix Mode — Developer terminal, digital rain, and cyberpunk aesthetic',
@@ -17,6 +18,7 @@ const OPTIONS = [
   {
     id: 'recruiter',
     label: 'RECRUITER / HR',
+    shortLabel: 'HR',
     pill: 'bg-[#3b82f6]',
     icon: Briefcase,
     title: 'Recruiter View — Clean, distraction-free executive overview for HR and hiring managers',
@@ -24,7 +26,13 @@ const OPTIONS = [
 ] as const
 
 /** Two-mode switcher: Matrix (Tech/Hacker) and Recruiter (Clean/HR). */
-export function PhosphorToggle({ className }: { className?: string }) {
+export function PhosphorToggle({
+  className,
+  compact = false,
+}: {
+  className?: string
+  compact?: boolean
+}) {
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
@@ -53,7 +61,8 @@ export function PhosphorToggle({ className }: { className?: string }) {
             title={option.title}
             onClick={() => setTheme(option.id)}
             className={cn(
-              'flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-2xs uppercase tracking-[0.14em] transition-all duration-200',
+              'flex items-center gap-1.5 rounded-full font-mono text-2xs uppercase tracking-[0.14em] transition-all duration-200',
+              compact ? 'px-2 py-0.5 text-[11px]' : 'px-3 py-1',
               selected
                 ? 'bg-mx-primary/20 text-mx-bright font-semibold shadow-sm'
                 : 'text-mx-textDim hover:bg-mx-primary/10 hover:text-mx-bright',
@@ -64,7 +73,7 @@ export function PhosphorToggle({ className }: { className?: string }) {
               aria-hidden="true"
               className={cn('h-1.5 w-1.5 rounded-full', option.pill, selected ? 'opacity-100 ring-2 ring-mx-primary/30' : 'opacity-40')}
             />
-            <span className="inline">{option.label}</span>
+            <span>{compact ? option.shortLabel : option.label}</span>
           </button>
         )
       })}

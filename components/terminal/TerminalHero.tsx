@@ -27,7 +27,7 @@ export default function TerminalHero() {
     : { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 } }
 
   return (
-    <section className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 lg:px-8">
+    <section id="hero" className="mx-auto max-w-6xl px-4 pt-8 sm:px-6 lg:px-8 scroll-mt-28">
       <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
         <p className="mx-label">01 / operator terminal</p>
         <span className="mx-hairline hidden flex-1 sm:block" />
