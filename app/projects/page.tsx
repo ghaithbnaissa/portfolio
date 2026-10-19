@@ -1,0 +1,98 @@
+import Link from 'next/link'
+import { ArrowLeft, ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react'
+
+import { projects } from '../../data/projects'
+import { Card, CardCommand, CardContent, CardHeader, CardTitle } from '../../components/ui/card'
+import { Badge } from '../../components/ui/badge'
+import SiteHeader from '../../components/site-header'
+import SiteFooter from '../../components/site-footer'
+import SectionHeading from '../../components/matrix/section-heading'
+import BracketFrame from '../../components/matrix/bracket-frame'
+
+export const metadata = {
+  title: 'System Projects | Ghaith Ben Aissa',
+  description: 'DevSecOps, Network Engineering, and Cloud Automation Projects by Ghaith Ben Aissa.',
+}
+
+export default function ProjectsPage() {
+  return (
+    <div className="min-h-screen text-mx-text">
+      <SiteHeader />
+
+      <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="mb-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 font-mono text-xs text-mx-primary hover:text-mx-bright hover:underline"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            <span>Return to Terminal</span>
+          </Link>
+        </div>
+
+        <SectionHeading
+          index="ARCHIVE // DEPLOYMENTS"
+          title="System Deployments"
+          kicker="// production pipelines, virtualization & observability architectures"
+          icon={ShieldCheck}
+        />
+
+        <div className="grid gap-6 md:grid-cols-3">
+          {projects.map((project) => (
+            <BracketFrame key={project.slug} onHover size={14}>
+              <Card className="mx-panel-hover flex h-full flex-col justify-between">
+                <div>
+                  <CardCommand>
+                    <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-mx-primary" />
+                    <span>prj://{project.slug}</span>
+                  </CardCommand>
+                  <CardHeader>
+                    <CardTitle className="text-xl">{project.name}</CardTitle>
+                    <p className="mt-2 text-sm leading-relaxed text-mx-textDim">
+                      {project.shortDescription}
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="rounded-md border border-mx-line/60 bg-mx-panel2/40 p-3 text-xs leading-relaxed text-mx-textDim">
+                      <p className="font-mono text-2xs uppercase tracking-[0.16em] text-mx-primary">Architecture</p>
+                      <p className="mt-1 font-mono text-2xs text-mx-bright">{project.architecture}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {project.stack.map((tech) => (
+                        <Badge key={tech} variant="outline" className="text-2xs">
+                          {tech}
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </div>
+                <div className="border-t border-mx-line/50 p-5 pt-4">
+                  <div className="flex items-center justify-between">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      className="inline-flex items-center gap-1.5 font-mono text-xs text-mx-primary transition-colors hover:text-mx-bright hover:underline"
+                    >
+                      <span>Deep Dive</span>
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </Link>
+                    <a
+                      href={project.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 font-mono text-2xs text-mx-textFaint hover:text-mx-bright"
+                    >
+                      <span>Repository</span>
+                      <ExternalLink className="h-3 w-3" />
+                    </a>
+                  </div>
+                </div>
+              </Card>
+            </BracketFrame>
+          ))}
+        </div>
+      </main>
+
+      <SiteFooter />
+    </div>
+  )
+}
