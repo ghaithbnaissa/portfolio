@@ -5,6 +5,7 @@ import { getGitHubOverview } from '../lib/github'
 import { Badge } from './ui/badge'
 import { Card, CardCommand, CardContent, CardHeader, CardTitle } from './ui/card'
 import SectionHeading from './section-heading'
+import { AnimatedNumber } from './ui/counter'
 
 type GitHubSectionProps = {
   username: string
@@ -45,7 +46,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="font-sans text-3xl font-extrabold tracking-tight text-mx-bright">
-              {github.public_repos}
+              <AnimatedNumber value={github.public_repos} />
             </div>
             <p className="mt-1 font-sans text-xs text-mx-textFaint">Active source repositories</p>
           </CardContent>
@@ -63,7 +64,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="font-sans text-3xl font-extrabold tracking-tight text-mx-bright">
-              {github.recent_pushes}
+              <AnimatedNumber value={github.recent_pushes} />
             </div>
             <p className="mt-1 font-sans text-xs text-mx-textFaint">Pushes &amp; contributions</p>
           </CardContent>
@@ -81,7 +82,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="font-sans text-3xl font-extrabold tracking-tight text-mx-bright">
-              {github.followers}
+              <AnimatedNumber value={github.followers} />
             </div>
             <p className="mt-1 font-sans text-xs text-mx-textFaint">Developer network</p>
           </CardContent>
@@ -99,7 +100,7 @@ export default async function GitHubSection({ username }: GitHubSectionProps) {
           </CardHeader>
           <CardContent>
             <div className="font-sans text-3xl font-extrabold tracking-tight text-mx-bright">
-              {github.following}
+              <AnimatedNumber value={github.following} />
             </div>
             <p className="mt-1 font-sans text-xs text-mx-textFaint">Engineers &amp; peers</p>
           </CardContent>
